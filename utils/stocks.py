@@ -1,17 +1,6 @@
 import requests
 import re
 import pandas as pd
-#import logging
-#import http.client
-
-#http.client.HTTPConnection.debuglevel = 1
-
-#logging.basicConfig()
-#logging.getLogger().setLevel(logging.DEBUG)
-#requests_log = logging.getLogger("requests.packages.urllib3")
-#requests_log.setLevel(logging.DEBUG)
-#requests_log.propagate = True
-
 
 def get_stock_data(symbol, start, end):
     print('fetching: ', symbol, start, end)
