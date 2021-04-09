@@ -63,6 +63,3 @@ def get_all_stock_close(start, end):
             data = pd.merge(data, df, how='outer', left_index = True,
                             right_index = True)
     return data
-
-d = get_all_stock_close('03-25-2021', '03-29-2021')
-print(d)
