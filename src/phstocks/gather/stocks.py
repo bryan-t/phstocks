@@ -37,14 +37,11 @@ def get_stock_symbols():
         symbols.append(symbol)
     return symbols
 
-def get_all_stock_data(start, end):
-    # prepare dataframe
-    dates = pd.date_range(start, end).tolist()
-    data = pd.DataFrame({'dt': dates})
-    data.set_index('dt', inplace = True)
-
+def get_all_stock_close(start, end):
     # get stocks data for each symbol
     symbols = get_stock_symbols()
+    data = None
+    first = True
     for symbol in symbols:
         df = None
         try:
@@ -55,7 +52,17 @@ def get_all_stock_data(start, end):
             print(message)
             continue
 
-        df = df[['close']]
+        df.reset_index(level = 0, inplace = True)
+        df = df[['dt', 'close']]
+        df.set_index('dt', inplace=True)
         df.columns = [symbol]
-        data = data.join(df)
+        if first:
+            data = df
+            first = False
+        else:
+            data = pd.merge(data, df, how='outer', left_index = True,
+                            right_index = True)
     return data
+
+d = get_all_stock_close('03-25-2021', '03-29-2021')
+print(d)
